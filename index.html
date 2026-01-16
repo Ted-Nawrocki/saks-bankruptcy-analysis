@@ -580,6 +580,44 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ---------------------------
+           MOBILE PATCH (MINIMAL)
+           No content changes, CSS only
+           --------------------------- */
+        @media (max-width: 640px) {
+            header { padding: 56px 0 40px; }
+            header .subtitle { font-size: 16px; margin-bottom: 20px; }
+            section { padding: 44px 0; }
+            .section-header { margin-bottom: 24px; }
+
+            /* Reduce heavy padding inside white boxes */
+            .chart-container, .debt-waterfall, .info-card, .expandable-content { padding: 18px; }
+            .fact-card { padding: 18px; }
+            .alert-box { padding: 18px; }
+
+            /* Timeline: reclaim horizontal space */
+            .timeline { padding-left: 26px; }
+            .timeline::before { left: 10px; }
+            .timeline-item { padding-left: 16px; }
+            .timeline-item::before { left: -22px; }
+
+            /* Debt headers: allow wrapping on small screens */
+            .debt-layer-header { flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+            .debt-amount { font-size: 16px; white-space: nowrap; }
+
+            /* Charts: smaller heights */
+            .chart-wrapper { height: 280px; }
+            .chart-wrapper.large { height: 360px; }
+
+            /* Table: horizontal scroll instead of squishing */
+            .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .data-table th, .data-table td { white-space: nowrap; }
+        }
+
+        /* Scrollbar affordance (optional, harmless) */
+        .data-table::-webkit-scrollbar { height: 10px; }
+        .data-table::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 999px; }
     </style>
 </head>
 <body>
@@ -1547,7 +1585,7 @@
     </section>
 
 <script>
-// PROPERLY WORKING CHART.JS INITIALIZATION
+// PROPERLY WORKING CHART.JS INITIALIZATION (MINIMAL MOBILE OPTIMIZATION)
 (function() {
     'use strict';
     
@@ -1558,6 +1596,9 @@
             console.error('Chart.js not loaded');
             return;
         }
+
+        // Minimal mobile behavior toggle
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
         
         // Chart 1: Debt Composition Doughnut
         try {
@@ -1579,10 +1620,10 @@
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: 'right',
+                                position: isMobile ? 'bottom' : 'right',
                                 labels: {
-                                    font: { family: 'IBM Plex Sans', size: 12 },
-                                    padding: 15,
+                                    font: { family: 'IBM Plex Sans', size: isMobile ? 11 : 12 },
+                                    padding: isMobile ? 10 : 15,
                                     usePointStyle: true
                                 }
                             },
@@ -1592,7 +1633,7 @@
                                         const label = context.label || '';
                                         const value = context.parsed || 0;
                                         const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        const percentage = total ? ((value / total) * 100).toFixed(1) : '0.0';
                                         return `${label}: $${value}M (${percentage}%)`;
                                     }
                                 },
@@ -1652,12 +1693,18 @@
                                 title: {
                                     display: true,
                                     text: 'Amount Owed ($ Millions)',
-                                    font: { family: 'IBM Plex Sans', size: 12, weight: 600 }
+                                    font: { family: 'IBM Plex Sans', size: isMobile ? 11 : 12, weight: 600 }
+                                },
+                                ticks: {
+                                    font: { family: 'IBM Plex Sans', size: isMobile ? 10 : 12 }
                                 },
                                 grid: { color: 'rgba(0, 0, 0, 0.05)' }
                             },
                             y: {
-                                grid: { display: false }
+                                grid: { display: false },
+                                ticks: {
+                                    font: { family: 'IBM Plex Sans', size: isMobile ? 10 : 12 }
+                                }
                             }
                         }
                     }
