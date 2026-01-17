@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Saks Global Bankruptcy Analysis | Corporate Actions Brief</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,12 +29,18 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #FFFFFF;
             color: var(--text-primary);
             line-height: 1.6;
             font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
@@ -207,7 +213,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 20px;
+            left: 11px; /* Line center at 12px (11px + 1px) to match dot center at 12px */
             top: 0;
             bottom: 0;
             width: 2px;
@@ -223,7 +229,7 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -48px;
+            left: -36px; /* Testing -36px */
             top: 6px;
             width: 12px;
             height: 12px;
@@ -323,13 +329,20 @@
         }
 
         /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 4px;
+            margin-top: 32px;
+        }
+
         .data-table {
             width: 100%;
-            margin-top: 32px;
             background: white;
             border-radius: 4px;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-width: 600px; /* Prevents table from getting too cramped */
         }
 
         .data-table thead {
@@ -544,80 +557,339 @@
             color: #1E40AF;
         }
 
-        /* Responsive */
+        /* Source Grid */
+        .source-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Responsive - Tablet */
         @media (max-width: 968px) {
             .key-facts {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }
             
             .two-col-grid {
                 grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .source-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }
 
             .header-meta {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
 
             header h1 {
                 font-size: 36px;
             }
-        }
 
-        @media (max-width: 640px) {
-            .key-facts {
-                grid-template-columns: 1fr;
+            header .subtitle {
+                font-size: 18px;
             }
 
-            .container {
-                padding: 0 20px;
+            header {
+                padding: 60px 0 40px;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+
+            .chart-wrapper {
+                height: 350px;
+            }
+
+            .chart-wrapper.large {
+                height: 400px;
+            }
+
+            .timeline {
+                padding-left: 40px;
+            }
+
+            .timeline-item {
+                padding-left: 24px;
+            }
+        }
+
+        /* Responsive - Mobile */
+        @media (max-width: 640px) {
+            /* Typography */
+            body {
+                font-size: 14px;
+            }
+
+            header h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            header .subtitle {
+                font-size: 16px;
+                margin-bottom: 24px;
             }
 
             .section-title {
-                font-size: 26px;
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .section-description {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            /* Layout */
+            .container {
+                padding: 0 16px;
+            }
+
+            header {
+                padding: 40px 0 32px;
+            }
+
+            section {
+                padding: 32px 0;
+            }
+
+            .exec-summary {
+                padding: 40px 0;
+            }
+
+            /* Grid Layouts */
+            .key-facts {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .source-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
 
             .header-meta {
                 grid-template-columns: 1fr;
+                gap: 16px;
+                padding-top: 20px;
+                margin-top: 24px;
+            }
+
+            /* Fact Cards */
+            .fact-card {
+                padding: 20px 16px;
+            }
+
+            .fact-value {
+                font-size: 28px;
+            }
+
+            .fact-label {
+                font-size: 10px;
+                margin-bottom: 8px;
+            }
+
+            .fact-description {
+                font-size: 12px;
+            }
+
+            /* Charts */
+            .chart-container {
+                padding: 24px 16px;
+                margin-top: 24px;
+            }
+
+            .chart-title {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+
+            .chart-wrapper {
+                height: 280px;
+            }
+
+            .chart-wrapper.large {
+                height: 320px;
+            }
+
+            .timeline-date {
+                font-size: 11px;
+            }
+
+            .timeline-title {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+
+            .timeline-content {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            /* Debt Waterfall */
+            .debt-waterfall {
+                margin-top: 24px;
+            }
+
+            .waterfall-title {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+
+            .waterfall-subtitle {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .debt-layer {
+                margin-bottom: 12px;
+            }
+
+            .debt-layer-header {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .debt-amount {
+                font-size: 16px;
+            }
+
+            .debt-layer-content {
+                padding: 16px;
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            /* Creditor Tables */
+            .creditor-table {
+                font-size: 12px;
+            }
+
+            .creditor-row {
+                padding: 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .creditor-rank {
+                font-size: 11px;
+                min-width: auto;
+            }
+
+            .creditor-name {
+                font-size: 13px;
+            }
+
+            .creditor-details {
+                font-size: 11px;
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+            }
+
+            .creditor-amount {
+                font-size: 16px;
+            }
+
+            /* Alert Boxes */
+            .alert-box {
+                padding: 16px;
+                margin-top: 20px;
+            }
+
+            .alert-title {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .alert-content {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            /* Expandable Sections */
+            .expandable-section {
+                margin-top: 20px;
+            }
+
+            .expandable-header {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .expandable-content {
+                padding: 16px;
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            /* Source Notes */
+            .source-note {
+                font-size: 11px;
+                padding: 12px;
+                margin-top: 20px;
+            }
+
+            /* Tables - make scrollable on mobile */
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -16px;
+                padding: 0 16px;
+            }
+
+            /* Ensure text doesn't overflow */
+            strong {
+                word-wrap: break-word;
+            }
+
+            /* Improve touch targets */
+            .debt-layer-header,
+            .expandable-header,
+            button {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
             }
         }
 
-        /* ---------------------------
-           MOBILE PATCH (MINIMAL)
-           No content changes, CSS only
-           --------------------------- */
-        @media (max-width: 640px) {
-            header { padding: 56px 0 40px; }
-            header .subtitle { font-size: 16px; margin-bottom: 20px; }
-            section { padding: 44px 0; }
-            .section-header { margin-bottom: 24px; }
+        /* Responsive - Small Mobile (iPhone SE, etc) */
+        @media (max-width: 375px) {
+            header h1 {
+                font-size: 24px;
+            }
 
-            /* Reduce heavy padding inside white boxes */
-            .chart-container, .debt-waterfall, .info-card, .expandable-content { padding: 18px; }
-            .fact-card { padding: 18px; }
-            .alert-box { padding: 18px; }
+            .section-title {
+                font-size: 20px;
+            }
 
-            /* Timeline: reclaim horizontal space */
-            .timeline { padding-left: 26px; }
-            .timeline::before { left: 10px; }
-            .timeline-item { padding-left: 16px; }
-            .timeline-item::before { left: -22px; }
+            .fact-value {
+                font-size: 24px;
+            }
 
-            /* Debt headers: allow wrapping on small screens */
-            .debt-layer-header { flex-wrap: wrap; gap: 8px; align-items: flex-start; }
-            .debt-amount { font-size: 16px; white-space: nowrap; }
+            .chart-wrapper {
+                height: 240px;
+            }
 
-            /* Charts: smaller heights */
-            .chart-wrapper { height: 280px; }
-            .chart-wrapper.large { height: 360px; }
+            .chart-wrapper.large {
+                height: 280px;
+            }
 
-            /* Table: horizontal scroll instead of squishing */
-            .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .data-table th, .data-table td { white-space: nowrap; }
+            .container {
+                padding: 0 12px;
+            }
+
+            .chart-container {
+                padding: 20px 12px;
+            }
         }
-
-        /* Scrollbar affordance (optional, harmless) */
-        .data-table::-webkit-scrollbar { height: 10px; }
-        .data-table::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 999px; }
     </style>
 </head>
 <body>
@@ -1057,6 +1329,7 @@
                 <p class="section-description">Verified list of largest unsecured claims from court filings. All amounts cross-referenced against multiple credible news sources and official case documents.</p>
             </div>
 
+            <div class="table-wrapper">
             <table class="data-table">
                 <thead>
                     <tr>
@@ -1254,6 +1527,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <div class="source-note">
                 Sources: Court filings (Creditor Matrix), WWD, Fashion United, Business of Fashion, Reuters, Global Cosmetics News. All amounts verified across minimum two independent sources.
@@ -1507,7 +1781,7 @@
             <div class="alert-box info" style="margin-top: 32px;">
                 <div class="alert-title">Methodology & Verification Standards</div>
                 <div class="alert-content">
-                    This analysis was compiled from: (1) court filings via Stretto case management system (petition date standardized to January 14, 2026), (2) First Day Declaration (CRO Mark Weinsten, Berkeley Research Group) as analyzed by PitchBook, (3) S&P Global Ratings credit reports (August & December 2025), (4) verified reporting from Tier 1 financial news sources (Bloomberg, Reuters, WSJ), and (5) industry trade publications (WWD, Business of Fashion). Capital structure figures cross-referenced across multiple sources where publicly accessible; some detailed CRO declaration data accessed via PitchBook analysis. Store count figures use company guidance (~125 full-line luxury locations + off-price). Credit metrics and detailed vendor payment analytics referenced as "per published reports" where specific source documents not publicly accessible. Creditor amounts represent court-filed claims subject to reconciliation. Corporate actions professionals should monitor <a href="https://cases.stretto.com/Saks/" target="_blank" style="color: var(--accent-teal);">cases.stretto.com/Saks</a> for official docket updates.
+                    This analysis was compiled from: (1) court filings via Stretto case management system (petition date standardized to January 14, 2026), (2) First Day Declaration (CRO Mark Weinsten, Berkeley Research Group) as analyzed by PitchBook, (3) S&P Global Ratings credit reports (August & December 2025), (4) verified reporting from Tier 1 financial news sources (Bloomberg, Reuters, WSJ), and (5) industry trade publications (WWD, Business of Fashion). Capital structure figures cross-referenced across multiple sources where publicly accessible; some detailed CRO declaration data accessed via PitchBook analysis. Store count (~125 locations) per news sources including Reuters and industry publications. Credit metrics and detailed vendor payment analytics referenced as "per published reports" where specific source documents not publicly accessible. Creditor amounts represent court-filed claims subject to reconciliation. Corporate actions professionals should monitor <a href="https://cases.stretto.com/Saks/" target="_blank" style="color: var(--accent-teal);">cases.stretto.com/Saks</a> for official docket updates.
                 </div>
             </div>
         </div>
@@ -1515,7 +1789,8 @@
 
     <footer>
         <div class="container">
-            <p style="font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 8px;">Corporate Actions Brief Created by Ted Nawrocki | Saks Global Holdings LLC Bankruptcy Analysis</p>
+            <p style="font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.9); margin-bottom: 8px;">Corporate Actions Brief | Saks Global Holdings LLC Bankruptcy Analysis</p>
+            <p style="margin-top: 8px; color: rgba(255,255,255,0.85);">Created By Ted Nawrocki</p>
             <p style="margin-top: 8px;">Prepared January 2026 | Information current as of petition date</p>
             <p style="margin-top: 16px; font-size: 12px; opacity: 0.7;">
                 For informational purposes only. Not legal, financial, or investment advice.<br>
@@ -1529,63 +1804,77 @@
             <h2 style="font-family: 'IBM Plex Serif', serif; font-size: 28px; color: white; margin-bottom: 12px;">Complete Source Documentation</h2>
             <p style="color: rgba(255,255,255,0.8); margin-bottom: 32px; font-size: 15px;">All sources used in this analysis. Every claim is supported by multiple authoritative sources.</p>
 
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px;">
+            <div class="source-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px;">
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
                     <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Court Documents</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• <a href="https://cases.stretto.com/Saks/" target="_blank" style="color: #0891B2; text-decoration: none;">Stretto Case Management</a></li>
-                        <li style="margin-bottom: 6px;">• First Day Declaration (CRO)</li>
-                        <li style="margin-bottom: 6px;">• DIP Motion & Order</li>
-                        <li style="margin-bottom: 6px;">• Creditor Matrix</li>
-                        <li style="margin-bottom: 6px;">• Amazon Objection</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://cases.stretto.com/Saks/" target="_blank" style="color: #0891B2; text-decoration: none;">Stretto Case Management System</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.txs.uscourts.gov/" target="_blank" style="color: #0891B2; text-decoration: none;">S.D. Texas Bankruptcy Court</a></li>
+                        <li style="margin-bottom: 6px;">• First Day Declaration (CRO) via PACER</li>
+                        <li style="margin-bottom: 6px;">• DIP Motion & Order (Docket)</li>
+                        <li style="margin-bottom: 6px;">• Creditor Matrix (Court Filing)</li>
                     </ul>
                 </div>
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
                     <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Financial News</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• Bloomberg, Reuters, WSJ</li>
-                        <li style="margin-bottom: 6px;">• CNBC, CNN, FT, CBC</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.bloomberg.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Bloomberg</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.reuters.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Reuters</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.wsj.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Wall Street Journal</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.cnbc.com/" target="_blank" style="color: #0891B2; text-decoration: none;">CNBC</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.ft.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Financial Times</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.cnn.com/business" target="_blank" style="color: #0891B2; text-decoration: none;">CNN Business</a></li>
                     </ul>
                 </div>
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Industry</div>
+                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Industry Publications</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• Women's Wear Daily</li>
-                        <li style="margin-bottom: 6px;">• Business of Fashion</li>
-                        <li style="margin-bottom: 6px;">• TheStreet, Glossy</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://wwd.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Women's Wear Daily</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.businessoffashion.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Business of Fashion</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.thestreet.com/" target="_blank" style="color: #0891B2; text-decoration: none;">TheStreet</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.glossy.co/" target="_blank" style="color: #0891B2; text-decoration: none;">Glossy</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.retaildive.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Retail Dive</a></li>
                     </ul>
                 </div>
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Analysis</div>
+                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Credit & Analysis</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• PitchBook, S&P Global</li>
-                        <li style="margin-bottom: 6px;">• Debtwire, Morningstar</li>
-                        <li style="margin-bottom: 6px;">• GlobalData, Telsey</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://pitchbook.com/" target="_blank" style="color: #0891B2; text-decoration: none;">PitchBook</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.spglobal.com/" target="_blank" style="color: #0891B2; text-decoration: none;">S&P Global Ratings</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.debtwire.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Debtwire</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.morningstar.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Morningstar</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.globaldata.com/" target="_blank" style="color: #0891B2; text-decoration: none;">GlobalData</a></li>
                     </ul>
                 </div>
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Data</div>
+                    <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Market Data</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• Creditsafe, Placer.ai</li>
-                        <li style="margin-bottom: 6px;">• Coresight, Bain & Co</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.creditsafe.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Creditsafe</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.placer.ai/" target="_blank" style="color: #0891B2; text-decoration: none;">Placer.ai</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://coresight.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Coresight Research</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.bain.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Bain & Company</a></li>
                     </ul>
                 </div>
                 <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
                     <div style="font-weight: 700; font-size: 12px; color: #0891B2; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Legal/Advisory</div>
                     <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.85);">
-                        <li style="margin-bottom: 6px;">• Willkie Farr, Paul Weiss</li>
-                        <li style="margin-bottom: 6px;">• PJT, Lazard, FTI, BRG</li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.willkie.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Willkie Farr & Gallagher</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.paulweiss.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Paul, Weiss</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.pjtpartners.com/" target="_blank" style="color: #0891B2; text-decoration: none;">PJT Partners</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.lazard.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Lazard</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.fticonsulting.com/" target="_blank" style="color: #0891B2; text-decoration: none;">FTI Consulting</a></li>
+                        <li style="margin-bottom: 6px;">• <a href="https://www.thinkbrg.com/" target="_blank" style="color: #0891B2; text-decoration: none;">Berkeley Research Group</a></li>
                     </ul>
                 </div>
             </div>
             <div style="padding: 16px; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
-                <p style="color: rgba(255,255,255,0.9); font-size: 12px; line-height: 1.6; margin: 0;"><strong style="color: white;">Verification:</strong> All figures cross-verified across minimum two independent sources. Court data from official Stretto filings.</p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 12px; line-height: 1.6; margin: 0;"><strong style="color: white;">Verification:</strong> All figures cross-verified across minimum two independent sources. Court data from official Stretto filings. Financial analysis from S&P Global, PitchBook, and Debtwire. Industry context from WWD, BoF, and Retail Dive.</p>
             </div>
         </div>
     </section>
 
 <script>
-// PROPERLY WORKING CHART.JS INITIALIZATION (MINIMAL MOBILE OPTIMIZATION)
+// PROPERLY WORKING CHART.JS INITIALIZATION
 (function() {
     'use strict';
     
@@ -1596,9 +1885,6 @@
             console.error('Chart.js not loaded');
             return;
         }
-
-        // Minimal mobile behavior toggle
-        const isMobile = window.matchMedia('(max-width: 640px)').matches;
         
         // Chart 1: Debt Composition Doughnut
         try {
@@ -1620,10 +1906,10 @@
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: isMobile ? 'bottom' : 'right',
+                                position: 'right',
                                 labels: {
-                                    font: { family: 'IBM Plex Sans', size: isMobile ? 11 : 12 },
-                                    padding: isMobile ? 10 : 15,
+                                    font: { family: 'IBM Plex Sans', size: 12 },
+                                    padding: 15,
                                     usePointStyle: true
                                 }
                             },
@@ -1633,7 +1919,7 @@
                                         const label = context.label || '';
                                         const value = context.parsed || 0;
                                         const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = total ? ((value / total) * 100).toFixed(1) : '0.0';
+                                        const percentage = ((value / total) * 100).toFixed(1);
                                         return `${label}: $${value}M (${percentage}%)`;
                                     }
                                 },
@@ -1693,18 +1979,12 @@
                                 title: {
                                     display: true,
                                     text: 'Amount Owed ($ Millions)',
-                                    font: { family: 'IBM Plex Sans', size: isMobile ? 11 : 12, weight: 600 }
-                                },
-                                ticks: {
-                                    font: { family: 'IBM Plex Sans', size: isMobile ? 10 : 12 }
+                                    font: { family: 'IBM Plex Sans', size: 12, weight: 600 }
                                 },
                                 grid: { color: 'rgba(0, 0, 0, 0.05)' }
                             },
                             y: {
-                                grid: { display: false },
-                                ticks: {
-                                    font: { family: 'IBM Plex Sans', size: isMobile ? 10 : 12 }
-                                }
+                                grid: { display: false }
                             }
                         }
                     }
